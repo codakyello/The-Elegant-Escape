@@ -1,0 +1,21 @@
+{
+  "name": "the-wild-oasis-api",
+  "version": "1.0.0",
+  "description": "Api for the wild oasis",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "nodemon server.js",
+    "start:prod": "NODE_ENV=production nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "debug": "ndb server.js"
+  },
+  "author": "Ola Olorede",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^5.13.22",
+    "validator": "^13.12.0"
+  }
+}
