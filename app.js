@@ -58,6 +58,10 @@ app.use("/api/v1/guests", guestRoutes);
 
 app.use("/api/v1/settings", settingRoutes);
 
+app.get("/", (req, res) => {
+  res.send("<h1>Deployment Check</h1>");
+});
+
 app.use("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
   // res.status(404).json({
