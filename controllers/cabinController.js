@@ -2,6 +2,7 @@ const Cabin = require("../models/cabinModel");
 const catchAsync = require("../utils/catchAsync");
 const APIFEATURES = require("../utils/apiFeatures");
 const AppError = require("../utils/appError");
+const { sendSuccessResponseData } = require("../utils/responseHelpers");
 
 module.exports.getAllCabins = catchAsync(async (req, res) => {
   const apiFeatures = new APIFEATURES(Cabin, req.query)
@@ -11,14 +12,8 @@ module.exports.getAllCabins = catchAsync(async (req, res) => {
     .paginate();
 
   const cabins = await apiFeatures.query;
-  const totalCabins = await Cabin.countDocuments();
 
-  res.status(200).json({
-    status: "success",
-    totalCabins,
-    results: cabins.length,
-    data: { cabins },
-  });
+  sendSuccessResponseData(res, "cabins", cabins);
 });
 
 module.exports.getCabin = catchAsync(async (req, res) => {
@@ -57,7 +52,7 @@ module.exports.updateCabin = catchAsync(async (req, res) => {
     throw new AppError("Cabin not found", 404);
   }
 
-  res.json({
+  res.status(200).json({
     message: "Success",
     data: { cabin },
   });

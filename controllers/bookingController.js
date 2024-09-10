@@ -3,6 +3,7 @@ const Cabin = require("../models/cabinModel");
 const APIFEATURES = require("../utils/apiFeatures");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
+const { sendSuccessResponseData } = require("../utils/responseHelpers");
 
 module.exports.getAllBooking = catchAsync(async (req, res) => {
   const apiFeatures = new APIFEATURES(Booking, req.query)
@@ -12,26 +13,62 @@ module.exports.getAllBooking = catchAsync(async (req, res) => {
     .paginate();
 
   const bookings = await apiFeatures.query;
-  const totalBookings = await Booking.countDocuments();
+  // const totalBookings = await Booking.countDocuments();
 
   res.status(200).json({
     status: "success",
-    totalBookings,
     results: bookings.length,
     data: { bookings },
   });
 });
 
+module.exports.getGuestBookings = catchAsync(async (req, res) => {
+  const apiFeatures = new APIFEATURES(Booking, req.query)
+    .filter()
+    .limitFields()
+    .sort()
+    .paginate();
+
+  const bookings = await apiFeatures.query;
+  // const totalBookings = await Booking.countDocuments();
+
+  sendSuccessResponseData(res, "bookings", bookings);
+});
+
 module.exports.createBooking = catchAsync(async (req, res) => {
-  const newBooking = req.body;
+  let guestId = req.user.id;
+  let newBooking = req.body;
   const cabinId = newBooking.cabinId;
 
+  if (req.user.role === "admin") {
+    // make sure a userId has been specified
+    if (!newBooking.guestId) {
+      throw new AppError("Admins must specify guestId for booking");
+    }
+
+    guestId = newBooking.guestId;
+  }
+
+  if (req.user.role === "guest") {
+    newBooking.guest = guestId;
+  }
+
   const cabin = await Cabin.findById(cabinId);
+
+  if (!cabin) throw new AppError("Cabin does not exist", 404);
 
   if (cabin.isOccupied)
     throw new AppError(`Cannot book ${cabin.name}. Cabin is occupied`, 409);
 
-  const booking = await Booking.create(newBooking);
+  console.log(newBooking);
+  newBooking.cabinId = undefined;
+  newBooking.guestId = undefined;
+
+  const booking = await Booking.create({
+    ...newBooking,
+    cabin: cabinId,
+    guest: guestId,
+  });
 
   res.status(200).json({
     message: "success",

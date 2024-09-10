@@ -1,15 +1,37 @@
 const router = require("express").Router();
+const authController = require("../controllers/authController");
 
-const {
-  getAllBooking,
-  getBooking,
-  createBooking,
-  deleteBooking,
-  updateBooking,
-} = require("../controllers/bookingController");
+const bookingController = require("../controllers/bookingController");
 
-router.route("/").get(getAllBooking).post(createBooking);
+router
+  .route("/")
+  .get(
+    authController.authenticate,
+    authController.authorize("admin"),
+    bookingController.getAllBooking
+  )
+  .post(
+    authController.authenticate,
+    authController.authorize("guest", "admin"),
+    bookingController.createBooking
+  );
 
-router.route("/:id").get(getBooking).patch(updateBooking).delete(deleteBooking);
+router
+  .route("/:id")
+  .get(
+    authController.authenticate,
+    authController.authorize("admin", "guest"),
+    bookingController.getBooking
+  )
+  .patch(
+    authController.authenticate,
+    authController.authorize("guest"),
+    bookingController.updateBooking
+  )
+  .delete(
+    authController.authenticate,
+    authController.authorize("guest"),
+    bookingController.deleteBooking
+  );
 
 module.exports = router;

@@ -2,13 +2,13 @@ const mongoose = require("mongoose");
 const Cabin = require("./cabinModel");
 
 const bookingSchema = new mongoose.Schema({
-  guestId: {
+  guest: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Guest",
     required: [true, "A booking must have a guestId"],
   },
 
-  cabinId: {
+  cabin: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Cabin",
     required: [true, "A booking must have a cabinId"],
@@ -52,23 +52,29 @@ const bookingSchema = new mongoose.Schema({
   numGuests: Number,
 });
 
+bookingSchema.pre("findOne", function (next) {
+  // populate all the booking with cabin info
+  this.populate("cabin");
+  console.log("heere");
+  next();
+});
+
 bookingSchema.pre("save", async function (next) {
   const booking = this; // refers to the booking document being saved
   // boolean flag to check if new
   const cabinId = this.cabinId;
 
-  if (booking.isModified("status")) {
-    console.log("Status changing");
-    // target new bookings or booking status changes
-    const isCheckIn =
-      booking.status === "checked-in" || booking.status === "unconfirmed"; // check if status is check-in
+  if (!booking.isModified("status")) return next();
+  console.log("Status changing");
+  // target new bookings or booking status changes
+  const isCheckIn =
+    booking.status === "checked-in" || booking.status === "unconfirmed"; // check if status is check-in
 
-    await Cabin.findByIdAndUpdate(cabinId, { isOccupied: isCheckIn });
-  }
+  await Cabin.findByIdAndUpdate(cabinId, { isOccupied: isCheckIn });
 
   next(); // Move to the next middleware or save operation
 });
 
-const Booking = mongoose.model("Bookings", bookingSchema);
+const Booking = mongoose.model("Booking", bookingSchema);
 
 module.exports = Booking;

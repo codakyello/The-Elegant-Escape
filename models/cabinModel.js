@@ -34,6 +34,6 @@ const cabinSchema = new mongoose.Schema({
   cabinPrice: Number,
 });
 
-const Cabin = mongoose.model("Cabins", cabinSchema);
+const Cabin = mongoose.model("Cabin", cabinSchema);
 
 module.exports = Cabin;

@@ -24,6 +24,7 @@ class APIFEATURES {
 
   // 3) Field Limiting
   limitFields() {
+    console.log(this.queryString);
     if (this.queryString.fields) {
       const fields = this.queryString.fields.split(",").join(" ");
       this.query = this.query.select(fields);
