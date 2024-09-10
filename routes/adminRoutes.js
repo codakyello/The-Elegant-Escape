@@ -1,25 +1,19 @@
 const express = require("express");
-const {
-  adminSignUp,
-  adminLogin,
-  authenticate,
-  authorize,
-} = require("../controllers/authController");
+const authController = require("../controllers/authController");
 
-const {
-  getAllAdmins,
-  updateAdmin,
-  deleteAdmin,
-} = require("../controllers/adminController");
+const adminController = require("../controllers/adminController");
 
 const router = new express.Router();
 
-router.post("/signup", adminSignUp);
+router.post("/signup", authController.adminSignUp);
 
-router.post("/login", adminLogin);
+router.post("/login", authController.adminLogin);
 
-router.route("/").get(getAllAdmins);
+router.route("/").get(adminController.getAllAdmins);
 
-router.route("/:id").patch(updateAdmin).delete(deleteAdmin);
+router
+  .route("/:id")
+  .patch(adminController.updateAdmin)
+  .delete(adminController.deleteAdmin);
 
 module.exports = router;

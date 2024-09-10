@@ -59,9 +59,6 @@ app.use("/api/v1/guests", guestRoutes);
 app.use("/api/v1/settings", settingRoutes);
 
 app.use("*", (req, res, next) => {
-  // res.status(404).json({
-  //   message: "No Route",
-  // });
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
   // res.status(404).json({
   //   message: "No Route",
@@ -70,4 +67,3 @@ app.use("*", (req, res, next) => {
 
 app.use(globalErrorHandler);
 module.exports = app;
-// Start the server and listen for requests on a chosen port (e.g., 3000)

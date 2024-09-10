@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 
+////
 module.exports.verifyJwt = (token, secretKey) => {
   return new Promise((resolve, reject) => {
     jwt.verify(token, secretKey, (err, decoded) => {

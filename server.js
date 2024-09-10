@@ -30,7 +30,7 @@ mongoose
     console.log(e);
   });
 
-const port = process.env.PORT; // Use environment variable or default port
+const port = process.env.PORT; // Use env variable or default port
 const server = app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
@@ -42,6 +42,3 @@ process.on("unhandledRejection", (err) => {
     process.exit(1);
   });
 });
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZDAzZmU1ZjkzNjNiNTFiMDkyZjRkNSIsImlhdCI6MTcyNDkyMzg3OCwiZXhwIjoxNzMyNjk5ODc4fQ.sBEGhLW29qMkuKamBoV8jR25q4J-xOHK-5etaeO13H8
-
-// Add a feature where once a new token has been assigned it should invalidate all older tokens.

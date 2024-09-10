@@ -3,7 +3,7 @@ const catchAsync = require("../utils/catchAsync");
 module.exports.getAllAdmins = catchAsync(function (req, res) {
   return res.status(500).json({
     status: "error",
-    data: "This route is not yet defined",
+    data: "This route is not yet defined.",
   });
 });
 
