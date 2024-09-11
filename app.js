@@ -8,6 +8,7 @@ const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
 const hpp = require("hpp");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 const adminRoutes = require("./routes/adminRoutes");
 const guestRoutes = require("./routes/guestRoutes");
@@ -16,6 +17,8 @@ const bookingRoutes = require("./routes/bookingRoutes");
 const settingRoutes = require("./routes/cabinRoutes");
 
 const app = express();
+
+app.use(cors());
 
 app.use(helmet());
 
