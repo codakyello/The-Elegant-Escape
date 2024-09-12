@@ -21,11 +21,7 @@ router
 
 router
   .route("/:id")
-  .get(
-    authController.authenticate,
-    authController.authorize("admin", "guests"),
-    getCabin
-  )
+  .get(getCabin)
   .patch(
     authController.authenticate,
     authController.authorize("admin", "guests"),

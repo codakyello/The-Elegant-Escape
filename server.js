@@ -30,7 +30,7 @@ mongoose
     console.log(e);
   });
 
-const port = process.env.PORT; // Use env variable or default port
+const port = 3001; // Use env variable or default port
 const server = app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
