@@ -30,6 +30,8 @@ module.exports.getGuestBookings = catchAsync(async (req, res) => {
     .paginate();
 
   const bookings = await apiFeatures.query;
+
+  console.log(bookings);
   // const totalBookings = await Booking.countDocuments();
 
   sendSuccessResponseData(res, "bookings", bookings);
@@ -125,4 +127,7 @@ module.exports.updateBooking = catchAsync(async (req, res) => {
   });
 });
 
-module.exports.deleteBooking = (req, res) => {};
+module.exports.deleteBooking = catchAsync(async (req, res) => {
+  await Booking.findByIdAndDelete(req.params.id);
+  res.status(204).json();
+});

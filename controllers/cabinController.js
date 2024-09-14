@@ -3,6 +3,7 @@ const catchAsync = require("../utils/catchAsync");
 const APIFEATURES = require("../utils/apiFeatures");
 const AppError = require("../utils/appError");
 const { sendSuccessResponseData } = require("../utils/responseHelpers");
+const Booking = require("../models/bookingModel");
 
 module.exports.getAllCabins = catchAsync(async (req, res) => {
   const apiFeatures = new APIFEATURES(Cabin, req.query)
@@ -67,4 +68,11 @@ module.exports.deleteCabin = catchAsync(async (req, res) => {
   }
 
   res.status(204).json({ status: "success", data: null });
+});
+
+module.exports.getCabinBookedDates = catchAsync(async (req, res) => {
+  const bookings = await Booking.find({ cabin: req.params.id });
+  console.log(bookings);
+
+  sendSuccessResponseData(res, "bookings", bookings);
 });

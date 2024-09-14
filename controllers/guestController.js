@@ -20,7 +20,7 @@ module.exports.getAllGuest = catchAsync(async function (req, res) {
 
 module.exports.getMyBookings = catchAsync(async function (req, res) {
   const apiFeatures = new APIFEATURES(
-    Booking.find({ guest: req.user.id }).populate("cabin"),
+    Booking.find({ guest: req.user.id }).populate("cabin").populate("guest"),
     req.query
   )
     .filter()

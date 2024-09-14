@@ -55,7 +55,6 @@ const bookingSchema = new mongoose.Schema({
 bookingSchema.pre("findOne", function (next) {
   // populate all the booking with cabin info
   this.populate("cabin");
-  console.log("heere");
   next();
 });
 
@@ -67,10 +66,9 @@ bookingSchema.pre("save", async function (next) {
   if (!booking.isModified("status")) return next();
   console.log("Status changing");
   // target new bookings or booking status changes
-  const isCheckIn =
-    booking.status === "checked-in" || booking.status === "unconfirmed"; // check if status is check-in
+  const isOccupied = booking.status === "checked-in"; // check if status is check-in
 
-  await Cabin.findByIdAndUpdate(cabinId, { isOccupied: isCheckIn });
+  await Cabin.findByIdAndUpdate(cabinId, { isOccupied });
 
   next(); // Move to the next middleware or save operation
 });

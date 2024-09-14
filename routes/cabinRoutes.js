@@ -6,18 +6,16 @@ const {
   createCabin,
   updateCabin,
   deleteCabin,
+  getCabinBookedDates,
 } = require("../controllers/cabinController");
 
 const authController = require("../controllers/authController");
 
-router
-  .route("/")
-  .get(getAllCabins)
-  .post(
-    authController.authenticate,
-    authController.authorize("admin"),
-    createCabin
-  );
+router.route("/").get(getAllCabins).post(
+  authController.authenticate,
+
+  createCabin
+);
 
 router
   .route("/:id")
@@ -32,5 +30,7 @@ router
     authController.authorize("admin"),
     deleteCabin
   );
+
+router.get("/:id/bookings", getCabinBookedDates);
 
 module.exports = router;

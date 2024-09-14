@@ -14,7 +14,7 @@ const adminRoutes = require("./routes/adminRoutes");
 const guestRoutes = require("./routes/guestRoutes");
 const cabinRoutes = require("./routes/cabinRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
-const settingRoutes = require("./routes/cabinRoutes");
+const settingRoutes = require("./routes/settingRoutes");
 
 const app = express();
 

@@ -17,9 +17,9 @@ const cabinSchema = new mongoose.Schema({
 
   discount: { type: Number, default: 0 },
 
-  imageCover: {
+  image: {
     type: String,
-    required: [true, "A cabin must have a cover image"],
+    required: [true, "A cabin must have an image"],
   },
 
   images: [String],

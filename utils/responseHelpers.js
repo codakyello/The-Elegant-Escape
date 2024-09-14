@@ -12,6 +12,7 @@ module.exports.sendSuccessResponseData = (res, dataName, data) => {
     data: responseData,
   });
 };
+
 function parseTimeString(timeString) {
   const time = parseInt(timeString);
   const unit = timeString.slice(-1);
