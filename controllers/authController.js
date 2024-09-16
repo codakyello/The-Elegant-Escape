@@ -78,6 +78,23 @@ module.exports.verifyToken = function (req, res) {
   });
 };
 
+module.exports.getGuest = catchAsync(async function (req, res) {
+  if (!req.body.email) throw new AppError("Please provide an email");
+  const guest = await Guest.findOne({ email: req.body.email });
+  if (!guest) throw new AppError("Guest has not been created");
+  res.status(200).json({
+    message: "success",
+    data: { guest },
+  });
+});
+
+module.exports.createGuest = catchAsync(async function (req, res) {
+  const guest = await Guest.create(req.body);
+  res.status(200).json({
+    message: "success",
+    data: { guest },
+  });
+});
 // Google as well as other provider sign in
 module.exports.guestSignIn = catchAsync(async function (req, res) {
   console.log(req.body);
