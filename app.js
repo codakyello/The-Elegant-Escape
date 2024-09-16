@@ -62,7 +62,7 @@ app.use("/api/v1/guests", guestRoutes);
 
 app.use("/api/v1/settings", settingRoutes);
 
-app.get("/api/v1/verifyToken", authenticate, verifyToken);
+app.post("/api/v1/verifyToken", authenticate, verifyToken);
 
 app.get("/", (req, res) => {
   res.send("<h1>Deployment Check</h1>");
