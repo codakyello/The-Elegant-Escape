@@ -46,6 +46,7 @@ module.exports.createSendToken = async (user, statusCode, res) => {
 
   res.cookie("jwt", token, cookieOptions);
 
+  // Latest time token was assigned, invalidates all other tokens assigned before this.
   await Guest.findByIdAndUpdate(user.id, {
     tokenAssignedAt: decoded.iat * 1000,
   });

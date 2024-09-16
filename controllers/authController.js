@@ -78,6 +78,20 @@ module.exports.verifyToken = function (req, res) {
   });
 };
 
+// Google as well as other provider sign in
+module.exports.guestSignIn = catchAsync(async function (req, res) {
+  console.log(req.body);
+  let guest;
+  guest = await Guest.findOne({ email: req.body.email });
+  const newGuest = {
+    fullName: req.body.name,
+    image: req.body.image,
+    email: req.body.email,
+  };
+  if (!guest) guest = await Guest.create(newGuest);
+  createSendToken(guest, 200, res);
+});
+
 module.exports.guestLogin = catchAsync(async function (req, res) {
   const { email, password } = req.body;
 

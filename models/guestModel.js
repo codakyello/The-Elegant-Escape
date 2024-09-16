@@ -19,14 +19,14 @@ const guestSchema = mongoose.Schema({
   role: { type: String, default: "guest" },
   password: {
     type: String,
-    required: [true, "Please confirm your password"],
     minLength: 8,
     select: false,
   },
-
+  image: {
+    type: String,
+  },
   confirmPassword: {
     type: String,
-    required: [true, "Please confirm your password"],
     validate: [
       function (el) {
         console.log(el);
@@ -38,7 +38,7 @@ const guestSchema = mongoose.Schema({
   },
   nationality: {
     type: String,
-    required: [true, "Please tell us your nationality"],
+    // required: [true, "Please tell us your nationality"],
   },
   countryFlag: String,
   passwordChangedAt: Date,
