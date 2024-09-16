@@ -70,6 +70,14 @@ module.exports.authorize = (...roles) =>
     next();
   });
 
+// Authentication endpoint to check if a token is valid
+module.exports.verifyToken = function (req, res) {
+  res.status(200).json({
+    status: "success",
+    message: "Successfully authenticated",
+  });
+};
+
 module.exports.guestLogin = catchAsync(async function (req, res) {
   const { email, password } = req.body;
 

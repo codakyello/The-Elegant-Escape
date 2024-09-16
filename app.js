@@ -15,6 +15,7 @@ const guestRoutes = require("./routes/guestRoutes");
 const cabinRoutes = require("./routes/cabinRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
 const settingRoutes = require("./routes/settingRoutes");
+const { authenticate, verifyToken } = require("./controllers/authController");
 
 const app = express();
 
@@ -60,6 +61,8 @@ app.use("/api/v1/admins", adminRoutes);
 app.use("/api/v1/guests", guestRoutes);
 
 app.use("/api/v1/settings", settingRoutes);
+
+app.get("/api/v1/verifyToken", authenticate, verifyToken);
 
 app.get("/", (req, res) => {
   res.send("<h1>Deployment Check</h1>");
