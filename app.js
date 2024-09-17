@@ -2,7 +2,7 @@ const express = require("express");
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController");
 const bodyParser = require("body-parser");
-const rateLimit = require("express-rate-limit");
+// const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
@@ -25,13 +25,13 @@ app.use(helmet());
 
 app.use(cookieParser());
 
-const limiter = rateLimit({
-  max: 100,
-  windowMs: 60 * 60 * 1000,
-  message: "Too many requests from this IP, please try again in an hour! ",
-});
+// const limiter = rateLimit({
+//   max: 100,
+//   windowMs: 60 * 60 * 1000,
+//   message: "Too many requests from this IP, please try again in an hour! ",
+// });
 
-app.use("/api", limiter);
+// app.use("/api", limiter);
 
 app.use(bodyParser.json({ limit: "10kb" }));
 
