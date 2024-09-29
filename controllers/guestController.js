@@ -58,7 +58,13 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     );
 
   // 2) We want to update the email and name
-  const filteredBody = filterObj(req.body, "email", "fullName");
+  const filteredBody = filterObj(
+    req.body,
+    "email",
+    "fullName",
+    "nationality",
+    "nationalID"
+  );
 
   const updatedUser = await Guest.findByIdAndUpdate(
     req.user._id,
