@@ -63,7 +63,8 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     "email",
     "fullName",
     "nationality",
-    "nationalID"
+    "nationalID",
+    "countryFlag"
   );
 
   const updatedUser = await Guest.findByIdAndUpdate(
