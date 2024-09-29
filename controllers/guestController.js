@@ -73,10 +73,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
       runValidators: true,
     }
   );
-  res.status(200).json({
-    status: "success",
-    user: updatedUser,
-  });
+  sendSuccessResponseData(res, "guest", updatedUser);
 });
 
 module.exports.deleteMe = catchAsync(async (req, res, next) => {
@@ -90,20 +87,14 @@ module.exports.getGuest = catchAsync(async function (req, res) {
   const user = await Guest.find({ guestId });
   if (!user) throw new AppError("No user was found", 404);
 
-  return res.status(200).json({
-    status: "success",
-    user,
-  });
+  sendSuccessResponseData(res, "guest", user);
 });
 
 module.exports.Me = catchAsync(async function (req, res) {
   const user = await Guest.findById(req.user.id);
   if (!user) throw new AppError("No user was found", 404);
 
-  return res.status(200).json({
-    status: "success",
-    user,
-  });
+  sendSuccessResponseData(res, "guest", user);
 });
 
 module.exports.updateGuest = catchAsync(async function (req, res) {

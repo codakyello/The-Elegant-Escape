@@ -38,11 +38,11 @@ module.exports.authenticate = catchAsync(async (req, res, next) => {
     );
 
   //6) Check if it is the latest requested token.
-  if (!freshUser.checkLatestToken(decoded.iat))
-    throw new AppError(
-      "Login Again. You cannot be logged into more than one device at a time!",
-      401
-    );
+  // if (!freshUser.checkLatestToken(decoded.iat))
+  //   throw new AppError(
+  //     "Login Again. You cannot be logged into more than one device at a time!",
+  //     401
+  //   );
 
   req.user = freshUser;
 
