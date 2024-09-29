@@ -40,7 +40,7 @@ const guestSchema = mongoose.Schema({
     type: String,
     required: [true, "Please tell us your nationality"],
   },
-  nationalID: String,
+  nationalID: Number,
   countryFlag: String,
   passwordChangedAt: Date,
   passwordResetToken: String,
