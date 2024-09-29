@@ -8,20 +8,10 @@ const { createSendToken } = require("../utils/responseHelpers");
 const { verifyJwt } = require("../utils/jwt");
 
 module.exports.authenticate = catchAsync(async (req, res, next) => {
-  let token = req.headers.authorization;
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
-  ) {
-    token = req.headers.authorization.split(" ")[1];
-  }
-
-  if (!token && req.cookies) {
-    token = req.cookies.jwt;
-    console.log("cookie present");
-  }
-
-  console.log(token);
+  let token =
+    (req.headers.authorization?.startsWith("Bearer") &&
+      req.headers.authorization.split(" ").at(1)) ||
+    req.headers.cookie?.split("=").at(1);
 
   if (!token) throw new AppError("You are not logged in!, Please log in", 401);
 
