@@ -60,8 +60,6 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   // 2) We want to update the email and name
   const filteredBody = filterObj(
     req.body,
-    "email",
-    "fullName",
     "nationality",
     "nationalID",
     "countryFlag"
