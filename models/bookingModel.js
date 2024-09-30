@@ -27,6 +27,8 @@ const bookingSchema = new mongoose.Schema({
 
   totalNights: Number,
 
+  totalPrice: Number,
+
   extrasPrice: Number,
 
   totalPrice: Number,
