@@ -39,7 +39,7 @@ class APIFEATURES {
       const sortBy = this.queryString.sort.split(",").join(" ");
       this.query = this.query.sort(sortBy);
     } else {
-      this.query = this.query.sort("name");
+      this.query = this.query.sort({ createdAt: -1 });
     }
     return this;
   }

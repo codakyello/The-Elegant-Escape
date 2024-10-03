@@ -7,8 +7,6 @@ router.post("/signup", authController.guestSignUp);
 
 router.post("/login", authController.guestLogin);
 
-router.post("/getGuest", authController.getGuest);
-
 router.post("/createGuest", authController.createGuest);
 
 router.post("/signIn", authController.guestSignIn);

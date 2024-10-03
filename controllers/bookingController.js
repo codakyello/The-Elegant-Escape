@@ -31,7 +31,6 @@ module.exports.getGuestBookings = catchAsync(async (req, res) => {
 
   const bookings = await apiFeatures.query;
 
-  console.log(bookings);
   // const totalBookings = await Booking.countDocuments();
 
   sendSuccessResponseData(res, "bookings", bookings);
