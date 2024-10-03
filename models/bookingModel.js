@@ -25,7 +25,7 @@ const bookingSchema = new mongoose.Schema({
     default: "unconfirmed",
   },
 
-  totalNights: Number,
+  numNights: Number,
 
   totalPrice: Number,
 
