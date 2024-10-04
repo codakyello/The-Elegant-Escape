@@ -25,12 +25,12 @@ router
   )
   .patch(
     authController.authenticate,
-    authController.authorize("guest"),
+    authController.authorize("guest", "admin"),
     bookingController.updateBooking
   )
   .delete(
     authController.authenticate,
-    authController.authorize("guest"),
+    authController.authorize("guest", "admin"),
     bookingController.deleteBooking
   );
 
