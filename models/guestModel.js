@@ -38,7 +38,6 @@ const guestSchema = mongoose.Schema({
   },
   nationality: {
     type: String,
-    required: [true, "Please tell us your nationality"],
   },
   nationalID: Number,
   countryFlag: String,
