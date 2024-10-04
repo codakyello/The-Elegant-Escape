@@ -71,8 +71,30 @@ module.exports.deleteCabin = catchAsync(async (req, res) => {
 });
 
 module.exports.getCabinBookedDates = catchAsync(async (req, res) => {
-  const bookings = await Booking.find({ cabin: req.params.id });
-  console.log(bookings);
+  // get bookings that status is not unconfirmed and past or checkedin,
+  // status is unconfirmed but not past
+  // const bookings = await Booking.find({
+  //   cabin: req.params.id,
+  //   status: "checked-in",
+  // });
+  // console.log(bookings);
+
+  const now = new Date(); // Current date
+
+  const bookings = await Booking.find({
+    cabin: req.params.id,
+    $or: [
+      {
+        status: "checked-in", // Ongoing bookings with "checked-in" status
+      },
+      {
+        $and: [
+          { status: "unconfirmed" }, // Status is "unconfirmed"
+          { startDate: { $gte: now } }, // Start date is in the future or ongoing
+        ],
+      },
+    ],
+  });
 
   sendSuccessResponseData(res, "bookings", bookings);
 });
