@@ -57,7 +57,6 @@ const bookingSchema = new mongoose.Schema({
 bookingSchema.pre(/^find/, function (next) {
   // Populate all the booking queries with cabin info
   this.populate("cabin");
-  this.populate("guest");
 
   next();
 });
