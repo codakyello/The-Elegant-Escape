@@ -77,7 +77,6 @@ module.exports.getCabinBookedDates = catchAsync(async (req, res) => {
   //   cabin: req.params.id,
   //   status: "checked-in",
   // });
-  // console.log(bookings);
 
   const now = new Date(); // Current date
 
