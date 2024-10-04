@@ -60,20 +60,20 @@ bookingSchema.pre("findOne", function (next) {
   next();
 });
 
-bookingSchema.pre("save", async function (next) {
-  const booking = this; // refers to the booking document being saved
-  // boolean flag to check if new
-  const cabinId = this.cabinId;
+// bookingSchema.pre("save", async function (next) {
+//   const booking = this; // refers to the booking document being saved
+//   // boolean flag to check if new
+//   const cabinId = this.cabinId;
 
-  if (!booking.isModified("status")) return next();
-  console.log("Status changing");
-  // target new bookings or booking status changes
-  const isOccupied = booking.status === "checked-in"; // check if status is check-in
+//   if (!booking.isModified("status")) return next();
+//   console.log("Status changing");
+//   // target new bookings or booking status changes
+//   const isOccupied = booking.status === "checked-in"; // check if status is check-in
 
-  await Cabin.findByIdAndUpdate(cabinId, { isOccupied });
+//   await Cabin.findByIdAndUpdate(cabinId, { isOccupied });
 
-  next(); // Move to the next middleware or save operation
-});
+//   next(); // Move to the next middleware or save operation
+// });
 
 const Booking = mongoose.model("Booking", bookingSchema);
 
