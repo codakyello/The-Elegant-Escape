@@ -91,9 +91,7 @@ module.exports.getGuest = catchAsync(async function (req, res) {
 });
 
 module.exports.getGuestByEmail = catchAsync(async function (req, res) {
-  console.log("here");
   const email = req.query.email;
-  console.log(email);
   const user = await Guest.findOne({ email });
   console.log(user);
   if (!user) throw new AppError("No user was found", 404);
