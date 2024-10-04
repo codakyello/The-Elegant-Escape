@@ -90,6 +90,14 @@ module.exports.getGuest = catchAsync(async function (req, res) {
   sendSuccessResponseData(res, "guest", user);
 });
 
+module.exports.getGuestByEmail = catchAsync(async function (req, res) {
+  const email = req.params.email;
+  const user = await Guest.find({ email });
+  if (!user) throw new AppError("No user was found", 404);
+
+  sendSuccessResponseData(res, "guest", user);
+});
+
 module.exports.Me = catchAsync(async function (req, res) {
   const user = await Guest.findById(req.user.id);
   if (!user) throw new AppError("No user was found", 404);

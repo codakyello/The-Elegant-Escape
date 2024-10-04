@@ -49,6 +49,8 @@ router.get(
   guestController.getMyBookings
 );
 
+router.get("/email", guestController.getGuestByEmail);
+
 router
   .route("/:id")
   .get(
