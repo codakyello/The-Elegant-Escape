@@ -84,15 +84,18 @@ module.exports.deleteMe = catchAsync(async (req, res, next) => {
 
 module.exports.getGuest = catchAsync(async function (req, res) {
   const guestId = req.params.id;
-  const user = await Guest.find({ guestId });
+  const user = await Guest.findById(guestId);
   if (!user) throw new AppError("No user was found", 404);
 
   sendSuccessResponseData(res, "guest", user);
 });
 
 module.exports.getGuestByEmail = catchAsync(async function (req, res) {
-  const email = req.params.email;
-  const user = await Guest.find({ email });
+  console.log("here");
+  const email = req.query.email;
+  console.log(email);
+  const user = await Guest.findOne({ email });
+  console.log(user);
   if (!user) throw new AppError("No user was found", 404);
 
   sendSuccessResponseData(res, "guest", user);

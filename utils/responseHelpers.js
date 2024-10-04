@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const Guest = require("../models/guestModel");
-const { signToken, verifyJwt } = require("./jwt");
+const { verifyJwt } = require("./jwt");
 
 module.exports.sendSuccessResponseData = (res, dataName, data) => {
   const responseData = {};
