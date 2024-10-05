@@ -33,14 +33,12 @@ router.patch(
   authController.authorize("guest"),
   guestController.updateMe
 );
-router
-  .route("/")
-  .get(
-    authController.authenticate,
-    authController.authorize("admin"),
-    guestController.getAllGuest
-  )
-  .post(authController.createGuest);
+router.get(
+  "/",
+  authController.authenticate,
+  authController.authorize("admin"),
+  guestController.getAllGuest
+);
 
 router.get(
   "/myBookings",
