@@ -39,7 +39,15 @@ const guestSchema = mongoose.Schema({
   nationality: {
     type: String,
   },
-  nationalID: Number,
+  nationalID: {
+    type: Number,
+    validate: {
+      validator: function (value) {
+        return /^[a-zA-Z0-9]{8,12}$/.test(value);
+      },
+      message: "Please provide a valid national ID.",
+    },
+  },
   countryFlag: String,
   passwordChangedAt: Date,
   passwordResetToken: String,
