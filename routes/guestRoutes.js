@@ -7,8 +7,6 @@ router.post("/signup", authController.guestSignUp);
 
 router.post("/login", authController.guestLogin);
 
-router.post("/createGuest", authController.createGuest);
-
 router.post("/signIn", authController.guestSignIn);
 
 router.post("/forgotPassword", authController.forgotGuestPassword);
@@ -35,12 +33,14 @@ router.patch(
   authController.authorize("guest"),
   guestController.updateMe
 );
-router.get(
-  "/",
-  authController.authenticate,
-  authController.authorize("admin"),
-  guestController.getAllGuest
-);
+router
+  .route("/")
+  .get(
+    authController.authenticate,
+    authController.authorize("admin"),
+    guestController.getAllGuest
+  )
+  .post(authController.createGuest);
 
 router.get(
   "/myBookings",

@@ -79,7 +79,7 @@ module.exports.getGuest = catchAsync(async function (req, res) {
 });
 
 module.exports.createGuest = catchAsync(async function (req, res) {
-  const guest = await Guest.create(req.body.user);
+  const guest = await Guest.create(req.body);
   res.status(200).json({
     message: "success",
     data: { guest },
