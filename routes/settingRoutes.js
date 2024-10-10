@@ -4,11 +4,7 @@ const authController = require("../controllers/authController");
 
 router
   .route("/")
-  .get(
-    authController.authenticate,
-    authController.authorize("admin", "guest"),
-    settingsController.getSettings
-  )
+  .get(settingsController.getSettings)
   .post(
     authController.authenticate,
     authController.authorize("admin"),
