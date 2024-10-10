@@ -15,9 +15,11 @@ module.exports.createSettings = catchAsync(async (req, res) => {
 });
 
 module.exports.updateSettings = catchAsync(async (req, res) => {
+  console.log("here");
   const setting = await Setting.findOneAndUpdate({}, req.body, {
     new: true,
     runValidators: true,
+    useFindAndModify: false,
   });
 
   sendSuccessResponseData(res, "settings", setting);

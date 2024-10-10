@@ -9,6 +9,14 @@ const settingSchema = new mongoose.Schema({
     type: Number,
     required: ["maxBookingLength is required"],
   },
+  breakFastPrice: {
+    type: Number,
+    required: ["breakFastPrice is required"],
+  },
+  maxGuestsPerBooking: {
+    type: Number,
+    required: ["maxGuestsPerBooking is required"],
+  },
 });
 
 module.exports = mongoose.model("Setting", settingSchema);
