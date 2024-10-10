@@ -135,7 +135,7 @@ module.exports.adminSignUp = catchAsync(async function (req, res) {
   await createSendToken(newAdmin, 201, res);
 });
 
-module.exports.adminLogin = async function (req, res) {
+module.exports.adminLogin = catchAsync(async function (req, res) {
   const { email, password } = req.body;
 
   //1) Check if email and password exist
@@ -147,14 +147,12 @@ module.exports.adminLogin = async function (req, res) {
 
   let admin = await Admin.findOne({ email }).select("+password");
 
-  console.log(admin);
-
   if (!admin || !(await admin.correctPassword(password, admin.password)))
     throw new AppError("Incorrect email or password", 401);
 
   //3) If everything ok, send token to client
   await createSendToken(admin, 200, res);
-};
+});
 
 module.exports.forgotGuestPassword = catchAsync(async function (req, res) {
   // find the userId based on email
