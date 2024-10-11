@@ -126,7 +126,7 @@ module.exports.guestSignUp = catchAsync(async function (req, res) {
 
 module.exports.adminSignUp = catchAsync(async function (req, res) {
   if (await Admin.findOne({ email: req.body.email }))
-    throw new AppError("Account already registered. Please log in", 409);
+    throw new AppError("Account already registered.", 409);
 
   const newAdmin = await Admin.create(req.body);
 
