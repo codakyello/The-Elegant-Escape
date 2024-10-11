@@ -5,7 +5,12 @@ const adminController = require("../controllers/adminController");
 
 const router = new express.Router();
 
-router.post("/signup", authController.adminSignUp);
+router.post(
+  "/signup",
+  authController.authenticate,
+  authController.authorize("admin"),
+  authController.adminSignUp
+);
 
 router.post("/login", authController.adminLogin);
 

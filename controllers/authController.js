@@ -54,7 +54,7 @@ module.exports.authorize = (...roles) =>
     if (!roles.includes(req.user.role))
       throw new AppError(
         "You do not have permission to perfom this action",
-        401
+        403
       );
 
     next();
@@ -128,6 +128,7 @@ module.exports.adminSignUp = catchAsync(async function (req, res) {
   if (await Admin.findOne({ email: req.body.email }))
     throw new AppError("Account already registered.", 409);
   const { isRoot } = req.body;
+  console.log(req.body);
 
   if (isRoot && !req.user.isRoot)
     throw new AppError("You do not have permission to create a root user", 403);
