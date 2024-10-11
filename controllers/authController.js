@@ -127,7 +127,10 @@ module.exports.guestSignUp = catchAsync(async function (req, res) {
 module.exports.adminSignUp = catchAsync(async function (req, res) {
   if (await Admin.findOne({ email: req.body.email }))
     throw new AppError("Account already registered.", 409);
+  const { isRoot } = req.body;
 
+  if (isRoot && !req.user.isRoot)
+    throw new AppError("You do not have permission to create a root user", 403);
   const newAdmin = await Admin.create(req.body);
 
   // Hide password field
@@ -225,26 +228,34 @@ module.exports.resetGuestPassword = catchAsync(async function (req, res, next) {
 });
 
 module.exports.updateGuestPassword = catchAsync(async function (req, res) {
-  //1.) ask for previous password
-  console.log(req.user);
-  const guest = await Guest.findById(req.user.id).select("+password");
+  let user;
+  if (req.user.role === "guest") {
+    user = await Guest.findById(req.user.id).select("+password");
+  } else if (req.user.role === "admin") {
+    user = await Admin.findById(req.user.id).select("+password");
+  }
+
+  if (!user) {
+    throw new AppError("User not found", 404);
+  }
 
   const { currPassword, password, confirmPassword } = req.body;
 
-  if (!currPassword) throw new AppError("What is your old password", 400);
+  if (!currPassword)
+    throw new AppError("Please provide your current pass", 400);
 
-  if (!(await guest.correctPassword(currPassword, guest.password))) {
+  if (!(await user.correctPassword(currPassword, user.password))) {
     // change it to the new Password
     throw new AppError("Password is incorrect", 401);
   }
-  if (await guest.correctPassword(password, guest.password)) {
+  if (await user.correctPassword(password, user.password)) {
     throw new AppError("New password cannot be the same as old password", 400);
   }
-  guest.password = password;
-  guest.confirmPassword = confirmPassword;
-  await guest.save({ validateBeforeSave: true });
+  user.password = password;
+  user.confirmPassword = confirmPassword;
+  await user.save({ validateBeforeSave: true });
 
-  createSendToken(guest, 200, res);
+  createSendToken(user, 200, res);
 });
 
 // Automatically call this function

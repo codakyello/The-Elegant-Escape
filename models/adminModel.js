@@ -33,6 +33,20 @@ const adminSchema = new mongoose.Schema({
       "Passwords do not match",
     ],
   },
+  isRoot: {
+    type: Boolean,
+    default: false,
+  },
+  active: { type: Boolean, default: true, select: false },
+  passwordChangedAt: Date,
+  image: String,
+  passwordChangedAt: Date,
+});
+
+// adminSchema.pre('save', async function)
+adminSchema.pre(/^find/, function (next) {
+  this.find({ active: { $ne: false } });
+  next();
 });
 
 adminSchema.pre("save", async function (next) {
@@ -42,6 +56,8 @@ adminSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, 12);
 
   this.confirmPassword = undefined;
+  this.passwordChangedAt = Date.now() - 1000;
+
   next();
 });
 
@@ -55,7 +71,7 @@ adminSchema.methods.correctPassword = async function (
 adminSchema.methods.changePasswordAfter = function (JWTTimestamp) {
   if (this.passWordChangedAt) {
     const changedTimestamp = parseInt(
-      this.passWordChangedAt.getTime() / 1000,
+      this.passwordChangedAt.getTime() / 1000,
       10
     );
     return changedTimestamp > JWTTimestamp;

@@ -49,7 +49,7 @@ module.exports.getGuestBookings = catchAsync(async function (req, res) {
   sendSuccessResponseData(res, "bookings", bookings);
 });
 
-exports.updateMe = catchAsync(async (req, res, next) => {
+module.exports.updateMe = catchAsync(async (req, res, next) => {
   // 1) Create error if user Posts password data
   if (req.body.password || req.body.passwordConfirm)
     throw new AppError(

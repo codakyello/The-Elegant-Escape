@@ -9,11 +9,26 @@ router.post("/signup", authController.adminSignUp);
 
 router.post("/login", authController.adminLogin);
 
-router.route("/").get(adminController.getAllAdmins);
+router
+  .route("/")
+  .get(
+    authController.authenticate,
+    authController.authorize("admin"),
+    adminController.getAllAdmins
+  );
 
 router
   .route("/:id")
-  .patch(adminController.updateAdmin)
-  .delete(adminController.deleteAdmin);
+  .get(adminController.getAdmin)
+  .patch(
+    authController.authenticate,
+    authController.authorize("admin"),
+    adminController.updateAdmin
+  )
+  .delete(
+    authController.authenticate,
+    adminController.isRootAdmin,
+    adminController.deleteAdmin
+  );
 
 module.exports = router;
