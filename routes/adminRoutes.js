@@ -14,14 +14,19 @@ router.post(
 
 router.post("/login", authController.adminLogin);
 
-router
-  .route("/")
-  .get(
-    authController.authenticate,
-    authController.authorize("admin"),
-    adminController.getAllAdmins
-  );
+router.get(
+  "/",
+  authController.authenticate,
+  authController.authorize("admin"),
+  adminController.getAllAdmins
+);
 
+router.get(
+  "/me",
+  authController.authenticate,
+  authController.authorize("admin"),
+  adminController.Me
+);
 router.patch(
   "/updateMe",
   authController.authenticate,

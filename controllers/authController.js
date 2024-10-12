@@ -99,7 +99,10 @@ module.exports.guestLogin = catchAsync(async function (req, res) {
   if (!email || !password)
     throw new AppError("Please provide email or password", 400);
 
-  const guest = await Guest.findOne({ email }).select("+password");
+  const guest = await Guest.findOne({ email, authType: "credentials" }).select(
+    "+password"
+  );
+
   if (!guest || !(await guest.correctPassword(password, guest.password)))
     throw new AppError("Incorrect email or password", 401);
 

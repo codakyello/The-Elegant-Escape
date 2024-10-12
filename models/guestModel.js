@@ -25,6 +25,10 @@ const guestSchema = mongoose.Schema({
   image: {
     type: String,
   },
+  authType: {
+    type: String,
+    default: "credentials",
+  },
   confirmPassword: {
     type: String,
     validate: [
@@ -97,6 +101,8 @@ guestSchema.methods.correctPassword = async function (
   candidatePassword,
   userPassword
 ) {
+  console.log(candidatePassword);
+  console.log(userPassword);
   return await bcrypt.compare(candidatePassword, userPassword);
 };
 

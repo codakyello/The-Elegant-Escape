@@ -24,19 +24,6 @@ module.exports.Me = catchAsync(async function (req, res) {
   sendSuccessResponseData(res, "admin", user);
 });
 
-module.exports.getAllAdmins = catchAsync(async function (req, res) {
-  const admins = await Admins.find({});
-  sendSuccessResponseData(res, "admins", admins);
-});
-
-module.exports.getAdmin = catchAsync(async function (req, res) {
-  const adminId = req.params.id;
-  const admin = await Admins.findById(adminId);
-  if (!admin) throw new AppError("Admin does not exist!", 404);
-
-  sendSuccessResponseData(res, "admin", admin);
-});
-
 module.exports.updateMe = catchAsync(async function (req, res) {
   // update admin profile and not his password
   if (req.body.passwordConfirm || req.body.password)
@@ -55,6 +42,19 @@ module.exports.updateMe = catchAsync(async function (req, res) {
     new: true,
     runValidators: true,
   });
+
+  sendSuccessResponseData(res, "admin", admin);
+});
+
+module.exports.getAllAdmins = catchAsync(async function (req, res) {
+  const admins = await Admins.find({});
+  sendSuccessResponseData(res, "admins", admins);
+});
+
+module.exports.getAdmin = catchAsync(async function (req, res) {
+  const adminId = req.params.id;
+  const admin = await Admins.findById(adminId);
+  if (!admin) throw new AppError("Admin does not exist!", 404);
 
   sendSuccessResponseData(res, "admin", admin);
 });
