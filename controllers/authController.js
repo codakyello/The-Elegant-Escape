@@ -97,11 +97,11 @@ module.exports.guestLogin = catchAsync(async function (req, res) {
   const { email, password } = req.body;
 
   if (!email || !password)
-    throw new AppError("Please provide email or password");
+    throw new AppError("Please provide email or password", 400);
 
   const guest = await Guest.findOne({ email }).select("+password");
   if (!guest || !(await guest.correctPassword(password, guest.password)))
-    throw new AppError("Incorrect email or password");
+    throw new AppError("Incorrect email or password", 401);
 
   // Hide password fields
   guest.password = undefined;

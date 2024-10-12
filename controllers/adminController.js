@@ -17,6 +17,13 @@ const filterObj = function (obj, ...allowedFields) {
   return newObject;
 };
 
+module.exports.Me = catchAsync(async function (req, res) {
+  const user = await Admins.findById(req.user.id);
+  if (!user) throw new AppError("No user was found", 404);
+
+  sendSuccessResponseData(res, "admin", user);
+});
+
 module.exports.getAllAdmins = catchAsync(async function (req, res) {
   const admins = await Admins.find({});
   sendSuccessResponseData(res, "admins", admins);
