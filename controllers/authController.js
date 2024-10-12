@@ -228,7 +228,7 @@ module.exports.resetGuestPassword = catchAsync(async function (req, res, next) {
   createSendToken(guest, 200, res);
 });
 
-module.exports.updateGuestPassword = catchAsync(async function (req, res) {
+module.exports.updatePassword = catchAsync(async function (req, res) {
   let user;
   if (req.user.role === "guest") {
     user = await Guest.findById(req.user.id).select("+password");

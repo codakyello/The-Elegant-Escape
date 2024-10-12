@@ -22,6 +22,13 @@ router
     adminController.getAllAdmins
   );
 
+router.patch(
+  "/updatePassword",
+  authController.authenticate,
+  authController.authorize("admin"),
+  authController.updatePassword
+);
+
 router
   .route("/:id")
   .get(
