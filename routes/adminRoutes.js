@@ -24,7 +24,11 @@ router
 
 router
   .route("/:id")
-  .get(adminController.getAdmin)
+  .get(
+    authController.authenticate,
+    authController.authorize("admin"),
+    adminController.getAdmin
+  )
   .patch(
     authController.authenticate,
     authController.authorize("admin"),

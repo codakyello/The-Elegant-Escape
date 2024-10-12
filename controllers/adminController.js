@@ -37,7 +37,7 @@ module.exports.updateAdmin = catchAsync(async function (req, res) {
       "You cannot update password with this route. Use /updatePassword"
     );
 
-  const filteredBody = filterObj(req.body, "name", "email", "image", "isRoot");
+  const filteredBody = filterObj(req.body, "name", "image", "isRoot");
 
   const { isRoot } = req.body;
 
