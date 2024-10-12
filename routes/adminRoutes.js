@@ -23,6 +23,13 @@ router
   );
 
 router.patch(
+  "/updateMe",
+  authController.authenticate,
+  authController.authorize("admin"),
+  adminController.updateMe
+);
+
+router.patch(
   "/updateMyPassword",
   authController.authenticate,
   authController.authorize("admin"),
@@ -35,11 +42,6 @@ router
     authController.authenticate,
     authController.authorize("admin"),
     adminController.getAdmin
-  )
-  .patch(
-    authController.authenticate,
-    authController.authorize("admin"),
-    adminController.updateAdmin
   )
   .delete(
     authController.authenticate,

@@ -30,11 +30,11 @@ module.exports.getAdmin = catchAsync(async function (req, res) {
   sendSuccessResponseData(res, "admin", admin);
 });
 
-module.exports.updateAdmin = catchAsync(async function (req, res) {
+module.exports.updateMe = catchAsync(async function (req, res) {
   // update admin profile and not his password
   if (req.body.passwordConfirm || req.body.password)
     throw new AppError(
-      "You cannot update password with this route. Use /updatePassword"
+      "You cannot update password with this route. Use /updateMyPassword"
     );
 
   const filteredBody = filterObj(req.body, "name", "image", "isRoot");
@@ -55,7 +55,7 @@ module.exports.updateAdmin = catchAsync(async function (req, res) {
 module.exports.deleteAdmin = catchAsync(async function (req, res) {
   // check if admin is root admin
 
-  const id = req.query.adminId;
+  const id = req.params.adminId;
 
   if (!id) throw new AppError("No Admin was specified", 400);
 
