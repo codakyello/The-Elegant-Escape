@@ -74,15 +74,15 @@ guestSchema.pre("save", async function (next) {
   next();
 });
 
-guestSchema.pre("save", async function (next) {
-  // hash password
-  if (!this.isModified("password")) return next();
+// guestSchema.pre("save", async function (next) {
+//   // hash password
+//   if (!this.isModified("password")) return next();
 
-  this.password = await bcrypt.hash(this.password, 12);
+//   this.password = await bcrypt.hash(this.password, 12);
 
-  this.confirmPassword = undefined;
-  next();
-});
+//   this.confirmPassword = undefined;
+//   next();
+// });
 
 guestSchema.methods.checkLatestToken = function (JWT_TIMESTAMP) {
   const tokenAssignedAtTimeStamp = parseInt(
