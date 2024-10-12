@@ -34,6 +34,7 @@ module.exports.createSendToken = async (user, statusCode, res) => {
   // Remove password from output
   user.password = undefined;
   user.tokenAssignedAt = undefined;
+  user.passwordChangedAt = undefined;
   res.cookie("jwt", token, cookieOptions).status(statusCode).json({
     status: "success",
     token,
