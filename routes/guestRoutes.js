@@ -14,7 +14,7 @@ router.post("/forgotPassword", authController.forgotGuestPassword);
 router.patch("/resetPassword/:token", authController.resetGuestPassword);
 
 router.patch(
-  "/updatePassword",
+  "/updateMyPassword",
   authController.authenticate,
   authController.authorize("guest"),
   authController.updateMyPassword
