@@ -11,8 +11,10 @@ module.exports.authenticate = catchAsync(async (req, res, next) => {
   let token =
     (req.headers.authorization?.startsWith("Bearer") &&
       req.headers.authorization.split(" ").at(1)) ||
-    req.headers.cookie?.split("=").at(1);
+    req.headers.Cookie?.split("=").at(1);
 
+  if (token === "null")
+    throw new AppError("You are not logged in!, Please log in", 401);
   if (!token) throw new AppError("You are not logged in!, Please log in", 401);
 
   // 2) Verify token
