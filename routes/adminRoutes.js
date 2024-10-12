@@ -26,7 +26,7 @@ router.patch(
   "/updatePassword",
   authController.authenticate,
   authController.authorize("admin"),
-  authController.updatePassword
+  authController.updateMyPassword
 );
 
 router

@@ -17,7 +17,7 @@ router.patch(
   "/updatePassword",
   authController.authenticate,
   authController.authorize("guest"),
-  authController.updatePassword
+  authController.updateMyPassword
 );
 
 router.get(
