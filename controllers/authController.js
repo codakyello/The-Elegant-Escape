@@ -247,7 +247,7 @@ module.exports.updatePassword = catchAsync(async function (req, res) {
 
   if (!(await user.correctPassword(currPassword, user.password))) {
     // change it to the new Password
-    throw new AppError("Password is incorrect", 401);
+    throw new AppError("Password is incorrect", 400);
   }
   if (await user.correctPassword(password, user.password)) {
     throw new AppError("New password cannot be the same as old password", 400);
