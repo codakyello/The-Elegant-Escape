@@ -34,7 +34,6 @@ module.exports.getMyBookings = catchAsync(async function (req, res) {
 });
 
 module.exports.getGuestBookings = catchAsync(async function (req, res) {
-  // route only for admin
   const apiFeatures = new APIFEATURES(
     Booking.find({ guest: req.params.guestId }),
     req.query
