@@ -230,6 +230,7 @@ module.exports.resetGuestPassword = catchAsync(async function (req, res, next) {
 
 module.exports.updateMyPassword = catchAsync(async function (req, res) {
   let user;
+  console.log("i dey here");
   if (req.user.role === "guest") {
     user = await Guest.findById(req.user.id).select("+password");
   } else if (req.user.role === "admin") {
