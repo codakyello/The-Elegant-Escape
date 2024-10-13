@@ -13,7 +13,6 @@ module.exports.getAllBooking = catchAsync(async (req, res) => {
     .paginate();
 
   const bookings = await apiFeatures.query.find().populate("guest");
-  // const totalBookings = await Booking.countDocuments();
 
   res.status(200).json({
     status: "success",
