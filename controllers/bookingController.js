@@ -14,11 +14,9 @@ module.exports.getAllBooking = catchAsync(async (req, res) => {
 
   const bookings = await apiFeatures.query.find().populate("guest");
 
-  res.status(200).json({
-    status: "success",
-    results: bookings.length,
-    data: { bookings },
-  });
+  const totalCount = await Booking.countDocuments();
+
+  sendSuccessResponseData(res, "bookings", bookings, totalCount);
 });
 
 module.exports.getGuestBookings = catchAsync(async (req, res) => {
@@ -30,9 +28,9 @@ module.exports.getGuestBookings = catchAsync(async (req, res) => {
 
   const bookings = await apiFeatures.query;
 
-  // const totalBookings = await Booking.countDocuments();
+  const totalBookings = await Booking.countDocuments();
 
-  sendSuccessResponseData(res, "bookings", bookings);
+  sendSuccessResponseData(res, "bookings", bookings, totalBookings);
 });
 
 module.exports.createBooking = catchAsync(async (req, res) => {

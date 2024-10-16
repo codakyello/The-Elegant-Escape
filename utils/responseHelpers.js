@@ -2,11 +2,12 @@ const jwt = require("jsonwebtoken");
 const Guest = require("../models/guestModel");
 const { verifyJwt } = require("./jwt");
 
-module.exports.sendSuccessResponseData = (res, dataName, data) => {
+module.exports.sendSuccessResponseData = (res, dataName, data, totalCount) => {
   const responseData = {};
   responseData[dataName] = data;
 
   res.status(200).json({
+    ...(totalCount !== undefined && totalCount !== null ? { totalCount } : {}),
     status: "success",
     results: data.length,
     data: responseData,
