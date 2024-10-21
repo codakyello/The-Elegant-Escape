@@ -47,8 +47,17 @@ module.exports.updateMe = catchAsync(async function (req, res) {
 });
 
 module.exports.getAllAdmins = catchAsync(async function (req, res) {
-  const admins = await Admins.find({});
-  sendSuccessResponseData(res, "admins", admins);
+  const apiFeatures = new APIFEATURES(Admins, req.query)
+    .filter()
+    .limitFields()
+    .sort()
+    .paginate();
+
+  const admins = await apiFeatures.query;
+
+  const totalAdmins = await Admins.countDocuments();
+
+  sendSuccessResponseData(res, "guests", admins, totalAdmins);
 });
 
 module.exports.getAdmin = catchAsync(async function (req, res) {

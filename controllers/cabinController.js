@@ -14,7 +14,9 @@ module.exports.getAllCabins = catchAsync(async (req, res) => {
 
   const cabins = await apiFeatures.query;
 
-  sendSuccessResponseData(res, "cabins", cabins);
+  const totalCabins = await Booking.countDocuments();
+
+  sendSuccessResponseData(res, "cabins", cabins, totalCabins);
 });
 
 module.exports.getCabin = catchAsync(async (req, res) => {

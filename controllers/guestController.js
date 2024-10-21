@@ -14,8 +14,17 @@ const filterObj = function (obj, ...allowedFields) {
 };
 
 module.exports.getAllGuest = catchAsync(async function (req, res) {
-  const guests = await Guest.find();
-  sendSuccessResponseData(res, "guests", guests);
+  const apiFeatures = new APIFEATURES(Guest, req.query)
+    .filter()
+    .limitFields()
+    .sort()
+    .paginate();
+
+  const guests = await apiFeatures.query;
+
+  const totalGuests = await Guest.countDocuments();
+
+  sendSuccessResponseData(res, "guests", guests, totalGuests);
 });
 
 module.exports.getMyBookings = catchAsync(async function (req, res) {
@@ -29,8 +38,9 @@ module.exports.getMyBookings = catchAsync(async function (req, res) {
     .paginate();
 
   const bookings = await apiFeatures.query;
+  const totalBookings = bookings.length;
 
-  sendSuccessResponseData(res, "bookings", bookings);
+  sendSuccessResponseData(res, "bookings", bookings, totalBookings);
 });
 
 module.exports.getGuestBookings = catchAsync(async function (req, res) {
