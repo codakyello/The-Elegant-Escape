@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Cabin = require("./cabinModel");
 
 const bookingSchema = new mongoose.Schema({
   guest: {
@@ -55,8 +54,9 @@ const bookingSchema = new mongoose.Schema({
 });
 
 bookingSchema.pre(/^find/, function (next) {
-  // Populate all the booking queries with cabin info
+  // Populate all the booking queries with cabin info and guest info
   this.populate("cabin");
+  this.populate("guest");
 
   next();
 });
