@@ -37,6 +37,7 @@ class APIFEATURES {
   sort() {
     if (this.queryString.sort) {
       const sortBy = this.queryString.sort.split(",").join(" ");
+      ["price rat "];
       this.query = this.query.sort(sortBy);
     } else {
       this.query = this.query.sort({ created_at: -1 });

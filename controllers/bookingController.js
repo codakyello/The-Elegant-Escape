@@ -26,7 +26,7 @@ module.exports.getGuestBookings = catchAsync(async (req, res) => {
     .sort()
     .paginate();
 
-  const bookings = await apiFeatures.query;
+  const bookings = await apiFeatures.query.populate("guest");
 
   const totalBookings = await Booking.countDocuments();
 
@@ -75,7 +75,7 @@ module.exports.createBooking = catchAsync(async (req, res) => {
 });
 
 module.exports.getBooking = catchAsync(async (req, res) => {
-  const booking = await Booking.findById(req.params.id);
+  const booking = await Booking.findById(req.params.id).populate("guest");
 
   if (!booking) throw new AppError("Booking not Found", 404);
 
