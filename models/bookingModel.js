@@ -1,6 +1,20 @@
 const mongoose = require("mongoose");
 
+const generateBookingId = function (length = 8) {
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let result = "";
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    result += characters[randomIndex];
+  }
+
+  return result;
+};
+
 const bookingSchema = new mongoose.Schema({
+  bookingId: { type: String, unique: true, required: true },
   guest: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Guest",
@@ -53,6 +67,13 @@ const bookingSchema = new mongoose.Schema({
   numGuests: Number,
 });
 
+bookingSchema.pre("save", async function (next) {
+  if (!this.bookingId) {
+    this.bookingId = generateBookingId(8); // Generate an 8 character unique ID
+  }
+  next();
+});
+
 bookingSchema.pre(/^find/, function (next) {
   // Populate all the booking queries with cabin info and guest info
   this.populate("cabin");
@@ -60,21 +81,6 @@ bookingSchema.pre(/^find/, function (next) {
 
   next();
 });
-
-// bookingSchema.pre("save", async function (next) {
-//   const booking = this; // refers to the booking document being saved
-//   // boolean flag to check if new
-//   const cabinId = this.cabinId;
-
-//   if (!booking.isModified("status")) return next();
-//   console.log("Status changing");
-//   // target new bookings or booking status changes
-//   const isOccupied = booking.status === "checked-in"; // check if status is check-in
-
-//   await Cabin.findByIdAndUpdate(cabinId, { isOccupied });
-
-//   next(); // Move to the next middleware or save operation
-// });
 
 const Booking = mongoose.model("Booking", bookingSchema);
 
