@@ -75,7 +75,9 @@ module.exports.createBooking = catchAsync(async (req, res) => {
 });
 
 module.exports.getBooking = catchAsync(async (req, res) => {
-  const booking = await Booking.findById(req.params.id).populate("guest");
+  const booking = await Booking.find({ bookingId: req.params.id }).populate(
+    "guest"
+  );
 
   if (!booking) throw new AppError("Booking not Found", 404);
 
