@@ -75,9 +75,8 @@ module.exports.createBooking = catchAsync(async (req, res) => {
 });
 
 module.exports.getBooking = catchAsync(async (req, res) => {
-  const booking = await Booking.findOne({ bookingId: req.params.id }).populate(
-    "guest"
-  );
+  const bookingId = req.params.id;
+  const booking = await Booking.findOne({ bookingId }).populate("guest");
 
   if (!booking) throw new AppError("Booking not Found", 404);
 
@@ -125,7 +124,7 @@ module.exports.updateBooking = catchAsync(async (req, res) => {
       );
   }
 
-  const booking = await Booking.findById(bookingId);
+  const booking = await Booking.findOne({ bookingId });
   // const booking = await Booking.findOneAndUpdate({ _id: bookingId }, req.body, {
   //   new: true,
   //   runValidators: true,
