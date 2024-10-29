@@ -148,6 +148,6 @@ module.exports.updateBooking = catchAsync(async (req, res) => {
 });
 
 module.exports.deleteBooking = catchAsync(async (req, res) => {
-  await Booking.findByIdAndDelete(req.params.id);
+  await Booking.findOneAndDelete({ bookingId: req.params.id });
   res.status(204).json();
 });
