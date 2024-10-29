@@ -106,7 +106,6 @@ module.exports.getBookingsAfterDate = catchAsync(async (req, res, next) => {
 
   // Attach the result to the response object or directly send it
   sendSuccessResponseData(res, "bookings", bookings);
-  // Or use `res.json(bookings);` if you want to send immediately
 });
 
 module.exports.updateBooking = catchAsync(async (req, res) => {
