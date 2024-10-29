@@ -91,7 +91,7 @@ module.exports.getBookingsAfterDate = catchAsync(async (req, res, next) => {
 
   // Validate if the daysAgo is a valid number
   if (isNaN(daysAgo) || daysAgo < 0) {
-    return res.status(400).json({ error: "Invalid date parameter" });
+    throw new AppError("Invalid date parameter", 400);
   }
 
   // Calculate the target date

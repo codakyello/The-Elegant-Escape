@@ -15,6 +15,13 @@ router
     bookingController.createBooking
   );
 
+router.get(
+  "/getBookingsAfterDate",
+  authController.authenticate,
+  authController.authorize("guest", "admin"),
+  bookingController.getBookingsAfterDate
+);
+
 router
   .route("/:id")
   .get(
@@ -32,12 +39,5 @@ router
     authController.authorize("guest", "admin"),
     bookingController.deleteBooking
   );
-
-router.get(
-  "/getBookingsAfterDate",
-  authController.authenticate,
-  authController.authorize("guest", "admin"),
-  bookingController.getBookingsAfterDate
-);
 
 module.exports = router;
