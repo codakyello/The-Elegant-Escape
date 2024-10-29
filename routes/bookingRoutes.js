@@ -16,7 +16,7 @@ router
   );
 
 router.get(
-  "/getBookingsAfterDate",
+  "/getBookingsAfter",
   authController.authenticate,
   authController.authorize("guest", "admin"),
   bookingController.getBookingsAfterDate
