@@ -14,7 +14,7 @@ const generateBookingId = function (length = 8) {
 };
 
 const bookingSchema = new mongoose.Schema({
-  bookingId: { type: String, unique: true, required: true },
+  bookingId: { type: String, unique: true },
   guest: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Guest",
