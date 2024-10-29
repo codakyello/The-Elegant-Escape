@@ -75,7 +75,7 @@ module.exports.createBooking = catchAsync(async (req, res) => {
 });
 
 module.exports.getBooking = catchAsync(async (req, res) => {
-  const booking = await Booking.find({ bookingId: req.params.id }).populate(
+  const booking = await Booking.findOne({ bookingId: req.params.id }).populate(
     "guest"
   );
 
