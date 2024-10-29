@@ -85,39 +85,28 @@ module.exports.getBooking = catchAsync(async (req, res) => {
   });
 });
 
-const mongoose = require("mongoose");
-const Booking = mongoose.model("Booking"); // Replace with your actual model name
+module.exports.getBookingsAfterDate = catchAsync(async (req, res, next) => {
+  // Get `date` parameter from the query string (e.g., `?date=7`)
+  const daysAgo = parseInt(req.query.date, 10);
 
-const getBookingsAfterDate = async (req, res, next) => {
-  try {
-    // Get `date` parameter from the query string (e.g., `?date=7`)
-    const daysAgo = parseInt(req.query.date, 10);
-
-    // Validate if the daysAgo is a valid number
-    if (isNaN(daysAgo) || daysAgo < 0) {
-      return res.status(400).json({ error: "Invalid date parameter" });
-    }
-
-    // Calculate the target date
-    const targetDate = new Date();
-    targetDate.setHours(0, 0, 0, 0); // Set to start of today
-    targetDate.setDate(targetDate.getDate() - daysAgo);
-
-    // Query bookings with created_at greater than or equal to targetDate
-    const bookings = await Booking.find({
-      created_at: { $gte: targetDate },
-    });
-
-    // Attach the result to the response object or directly send it
-    req.bookings = bookings; // Or use `res.json(bookings);` if you want to send immediately
-    next();
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+  // Validate if the daysAgo is a valid number
+  if (isNaN(daysAgo) || daysAgo < 0) {
+    return res.status(400).json({ error: "Invalid date parameter" });
   }
-};
 
-module.exports = getBookingsAfterDate;
+  // Calculate the target date
+  const targetDate = new Date();
+  targetDate.setHours(0, 0, 0, 0); // Set to start of today
+  targetDate.setDate(targetDate.getDate() - daysAgo);
+
+  // Query bookings with created_at greater than or equal to targetDate
+  const bookings = await Booking.find({
+    created_at: { $gte: targetDate },
+  });
+
+  // Attach the result to the response object or directly send it
+  req.bookings = bookings; // Or use `res.json(bookings);` if you want to send immediately
+});
 
 module.exports.updateBooking = catchAsync(async (req, res) => {
   const bookingId = req.params.id;

@@ -1,7 +1,5 @@
 const router = require("express").Router();
 const authController = require("../controllers/authController");
-const getBookingsAfterDate = require("../controllers/bookingController");
-
 const bookingController = require("../controllers/bookingController");
 
 router
@@ -39,7 +37,7 @@ router.get(
   "/getBookingsAfterDate",
   authController.authenticate,
   authController.authorize("guest", "admin"),
-  getBookingsAfterDate
+  bookingController.getBookingsAfterDate
 );
 
 module.exports = router;
