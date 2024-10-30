@@ -67,6 +67,7 @@ const sendErrProd = (err, res) => {
 };
 
 module.exports = (err, req, res, next) => {
+  //maybe you mistakenly forgot to put the error code or any uncaught error
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "error";
 

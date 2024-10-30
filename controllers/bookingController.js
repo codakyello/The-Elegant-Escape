@@ -148,6 +148,11 @@ module.exports.updateBooking = catchAsync(async (req, res) => {
 });
 
 module.exports.deleteBooking = catchAsync(async (req, res) => {
-  await Booking.findOneAndDelete({ bookingId: req.params.id });
+  const deletedBooking = await Booking.findOneAndDelete({
+    bookingId: req.params.id,
+  });
+  if (!deletedBooking) {
+    throw new AppError("Booking not found.", 404);
+  }
   res.status(204).json();
 });
