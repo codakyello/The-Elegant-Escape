@@ -125,20 +125,15 @@ module.exports.updateBooking = catchAsync(async (req, res) => {
   }
 
   const booking = await Booking.findOne({ bookingId });
-  // const booking = await Booking.findOneAndUpdate({ _id: bookingId }, req.body, {
-  //   new: true,
-  //   runValidators: true,
-  // });
+  if (!booking) {
+    throw new AppError("Booking not found", 404);
+  }
   for (let key in req.body) {
     booking[key] = req.body[key];
   }
 
   // Save the updated booking document
   await booking.save();
-
-  if (!booking) {
-    throw new AppError("Booking not found", 404);
-  }
 
   console.log("update Booking");
   res.status(200).json({
@@ -151,8 +146,7 @@ module.exports.deleteBooking = catchAsync(async (req, res) => {
   const deletedBooking = await Booking.findOneAndDelete({
     bookingId: req.params.id,
   });
-  if (!deletedBooking) {
-    throw new AppError("Booking not found.", 404);
-  }
+  if (!deletedBooking) throw new AppError("Booking not found.", 404);
+
   res.status(204).json();
 });
